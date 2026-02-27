@@ -15,6 +15,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -27,8 +28,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ethelterrycurrencyconverter.CurrencyViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,7 +53,12 @@ fun MainScreen(viewModel: CurrencyViewModel) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = viewModel.translate("title"))
+        Text(
+            text = viewModel.translate("title"),
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+            fontSize = 28.sp
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -64,12 +72,12 @@ fun MainScreen(viewModel: CurrencyViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = viewModel.translate("from"))
+        Text(text = viewModel.translate("from"), fontWeight = FontWeight.SemiBold)
         GenericDropdown(currencies, fromCurrency) { viewModel.setFromCurrency(it) }
         
         Spacer(modifier = Modifier.height(16.dp))
         
-        Text(text = viewModel.translate("to"))
+        Text(text = viewModel.translate("to"), fontWeight = FontWeight.SemiBold)
         GenericDropdown(currencies, toCurrency) { viewModel.setToCurrency(it) }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -79,13 +87,18 @@ fun MainScreen(viewModel: CurrencyViewModel) {
             enabled = !isLoading,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(viewModel.translate("convert"))
+            Text(viewModel.translate("convert"), fontSize = 18.sp)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         if (result.isNotEmpty()) {
-            Text(text = "${viewModel.translate("result")} $result")
+            Text(
+                text = "${viewModel.translate("result")} $result",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -132,11 +145,15 @@ fun Settings(viewModel: CurrencyViewModel) {
     val supportedLanguages = viewModel.supportedLanguages
 
     Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()) {
-        Text(text = viewModel.translate("settings"))
+        Text(
+            text = viewModel.translate("settings"),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
         
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = viewModel.translate("bg_color"))
+        Text(text = viewModel.translate("bg_color"), fontWeight = FontWeight.Medium)
         Row(verticalAlignment = Alignment.CenterVertically) {
             RadioButton(selected = viewModel.backgroundColor.value == Color.White, onClick = { viewModel.setBackgroundColor(Color.White) })
             Text(viewModel.translate("white"))
@@ -147,13 +164,13 @@ fun Settings(viewModel: CurrencyViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = viewModel.translate("music"))
+            Text(text = viewModel.translate("music"), fontWeight = FontWeight.Medium)
             Checkbox(checked = isMusicEnabled, onCheckedChange = { viewModel.toggleMusic() })
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = viewModel.translate("language"))
+        Text(text = viewModel.translate("language"), fontWeight = FontWeight.Medium)
         GenericDropdown(supportedLanguages, language) { viewModel.setLanguage(it) }
     }
 }
