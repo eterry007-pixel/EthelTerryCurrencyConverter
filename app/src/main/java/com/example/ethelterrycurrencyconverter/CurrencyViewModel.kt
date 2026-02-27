@@ -33,6 +33,7 @@ class CurrencyViewModel : ViewModel() {
         "Japanese", "Korean", "Italian", "Portuguese", "Russian"
     )
 
+    //main screen country currency options
     private val _fromCurrency = mutableStateOf("USD")
     val fromCurrency: State<String> = _fromCurrency
 
@@ -65,6 +66,7 @@ class CurrencyViewModel : ViewModel() {
         }
     }
 
+    //currency convertor calculator
     fun setAmount(newAmount: String) {
         _amount.value = newAmount
         calculateConversion()
@@ -92,6 +94,7 @@ class CurrencyViewModel : ViewModel() {
         _conversionResult.value = String.format("%.2f", result)
     }
 
+    //main screen background colour option and music option
     fun setBackgroundColor(color: Color) {
         _backgroundColor.value = color
     }
